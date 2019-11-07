@@ -48,9 +48,14 @@ export class SignupForm extends React.Component {
 
   handlePost(e) {
     //verify that the account information is legal
-    if(this.state.username.length <= 3 || this.state.password.length <= 3 ||
-       this.state.passwordC.length <= 3 || this.state.email.length <= 3){
-         window.alert("Fields must exceed 3 characters.");
+    if(this.state.password.length < 8){
+      window.alert("Password must be 8 characters");
+    }
+    else if(this.state.username.length < 8){
+      window.alert("Password must be 8 characters");
+    }
+    else if(this.state.email.length < 6){
+      window.alert("Email muest exceed 6 characters");
     }
     else if(this.state.password !== this.state.passwordC){
       window.alert("Passwords must match.");
@@ -59,32 +64,16 @@ export class SignupForm extends React.Component {
       window.alert("Must be a valid email.");
     }
     else{
-      axios.post('/api/user', {
+      axios.post('/signup', {
         username: this.state.username,
         password: this.state.password,
         email: this.state.email
       }).then(
         response => {
-          if(response.data === "Account Created"){
-            window.location.href = "/";
-          }
-          else {
-            window.alert("An unexpected error occured. Please try again later.");
-          }
+          window.alert("Should have worked.");
         },
         error => {
-          if(error.response.data === "HashError"){
-            window.alert("An error occured. Please try again later.");
-          }
-          else if(error.response.data === "DupEmail"){
-            window.alert("That email is a duplicate. Please select another.");
-          }
-          else if(error.response.data === "DupUser"){
-            window.alert("That username is a duplicate. Please select another.");
-          }
-          else{
-            window.alert("An error occured. Please try again later.");
-          }
+          window.alert("An error occured. Please try again later.");
         }
       );
     }
