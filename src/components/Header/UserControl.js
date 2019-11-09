@@ -30,13 +30,23 @@ export class UserControl extends React.Component {
 
   login() {
     if(this.state.username !== "" && this.state.password !== ""){
-      axios.post('/api/user/login', {
-        username: this.state.username,
-        password: this.state.password
-      }).then(
+
+      var form = new FormData();
+      form.set("username", this.state.username);
+      form.set("password", this.state.password);
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+
+      axios.post("/login", form, config)
+      .then(
         response => {
           //successful login
-          this.props.getUser();
+          window.alert("Login successful");
+          //this.props.getUser();
         },
         error => {
           window.alert("Invalid Username/Password combination.");
@@ -46,7 +56,7 @@ export class UserControl extends React.Component {
   }
 
   render() {
-    if(this.props.username === "Anonymous"){
+    if(this.props.username === null){
       //show login form
       return (
         <div>
