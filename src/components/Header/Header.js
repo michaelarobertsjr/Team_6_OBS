@@ -8,12 +8,12 @@ export class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null
+      username: "temp"
     };
   }
 
   getUser(){
-    axios.get("/api/user").then(
+    axios.get("/login").then(
       response => {
         //save cube card information
         this.setState({
@@ -21,17 +21,19 @@ export class Header extends React.Component {
         });
       },
       error => {
-        console.log(error);
+        this.setState({
+          username: null
+        });
       }
     );
   }
 
   componentDidMount() {
-    //this.getUser();
+    this.getUser();
   }
 
   render() {
-    if(true/*this.state.username === "Anonymous"*/){
+    if(this.state.username === null){
       return (
         <div className="mb-3">
           <nav className="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
@@ -41,7 +43,7 @@ export class Header extends React.Component {
                     <a className="nav-link" href="/">Home</a>
                   </li>
                   <li className="nav-item active">
-                    <a className="nav-link" href="/">Some Other Link</a>
+                    <a className="nav-link" href="/">Link</a>
                   </li>
                 </ul>
               </div>
@@ -50,7 +52,7 @@ export class Header extends React.Component {
         </div>
       );
     }
-    else if(this.state.username === null){
+    else if(this.state.username === "temp"){
       return (
         <></>
       );
@@ -64,13 +66,13 @@ export class Header extends React.Component {
                   <a className="nav-link" href="/">Home</a>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/cube/all">Cubes</a>
+                  <a className="nav-link" href="/">Link1</a>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/cube/player">My Cubes</a>
+                  <a className="nav-link" href="/">Link2</a>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/draft/player">Drafts</a>
+                  <a className="nav-link" href="/">Link3</a>
                 </li>
               </ul>
             </div>
