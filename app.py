@@ -6,10 +6,10 @@ import pymysql
 app = Flask(__name__)
 
 app.config['SECRET'] = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ=="
-app.config['DB_HOST'] = "35.202.171.233"
-app.config['DB_USER'] = "admin"
-app.config['DB_PASS'] = "team6adminpass"
-app.config['DB_NAME'] = "users"
+app.config['DB_HOST'] = ""
+app.config['DB_USER'] = ""
+app.config['DB_PASS'] = ""
+app.config['DB_NAME'] = ""
 
 engine = db.create_engine('mysql+pymysql://' + app.config['DB_USER'] + ':' + app.config['DB_PASS'] + '@' + app.config['DB_HOST'] + '/' + app.config['DB_NAME'], pool_pre_ping=True)
 app.config['DB_CONN'] = engine.connect()
@@ -20,32 +20,27 @@ def home():
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
-
     if request.method == "GET":
         return render_template("signup.html")
     elif request.method == "POST":
-        username = request.form.get('username')
-        assword = request.form.get("password")
-        email = request.form.get("email")
-        
+        username = request.form.get("username", None)
+        password = request.form.get("password", None)
+        email = request.form.get("email", None)
 
-        #app.config['DB_CONN'].execute('INSERT INTO users VALUES(' + username + ', ' + password + ', ' + email + ')')
-        print(username)
-        #encoded = jwt.encode({'some': 'payload'}, app.config['SECRET'], algorithm='HS256')
-        return "Success!"
+        #check whether all the data was passed in properly
+        if username == None or password == None or email == None:
+            return "Failed Request", 404
 
-@app.route('/api/user', methods=["GET", "POST"])
-def user():
-    return "test"
+        #send to database
+        sql = "INSERT INTO accounts (username, password, email) VALUES ('" + username + "','" + password + "','" + email + "')";
+        num = app.config['DB_CONN'].execute(sql)
 
-
-
-
+        return "Username already exists", 400
 
 @app.route('/welcome')
 def welcome():
     return render_template("obs_home.html")
 
 if __name__ == "__main__" :
-    
+
     app.run(debug=True)

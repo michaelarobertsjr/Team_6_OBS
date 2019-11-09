@@ -4,8 +4,8 @@
   "description": "Semester Project",
   "main": "app.py",
   "scripts": {
+    "build": "webpack --mode production",
     "start": "flask run",
-    "react": "webpack -d --config webpack.config.js",
     "test": "pytest"
   },
   "repository": {

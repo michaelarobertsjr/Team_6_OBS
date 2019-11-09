@@ -64,11 +64,20 @@ export class SignupForm extends React.Component {
       window.alert("Must be a valid email.");
     }
     else{
-      axios.post('/signup', {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email
-      }).then(
+      //post data to signup endpoint using axios
+      var form = new FormData();
+      form.set('username', this.state.username);
+      form.set('password', this.state.password);
+      form.set('email', this.state.email);
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+
+      axios.post('/signup', form, config)
+      .then(
         response => {
           window.alert("Should have worked.");
         },
