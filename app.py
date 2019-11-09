@@ -29,7 +29,7 @@ def signup():
         email = request.form.get("email")
         
 
-        #app.config['DB_CONN'].execute('INSERT INTO users VALUES(' + username + ', ' + password + ', ' + email + ')')
+        #app.config['DB_CONN'].execute('INSERT INTO accounts VALUES(' + username + ', ' + password + ', ' + email + ')')
         print(username)
         #encoded = jwt.encode({'some': 'payload'}, app.config['SECRET'], algorithm='HS256')
         return "Success!"
