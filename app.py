@@ -6,10 +6,10 @@ import pymysql
 app = Flask(__name__)
 
 app.config['SECRET'] = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ=="
-app.config['DB_HOST'] = ""
-app.config['DB_USER'] = ""
-app.config['DB_PASS'] = ""
-app.config['DB_NAME'] = ""
+app.config['DB_HOST'] = "35.202.171.233"
+app.config['DB_USER'] = "admin"
+app.config['DB_PASS'] = "team6adminpass"
+app.config['DB_NAME'] = "users"
 
 engine = db.create_engine('mysql+pymysql://' + app.config['DB_USER'] + ':' + app.config['DB_PASS'] + '@' + app.config['DB_HOST'] + '/' + app.config['DB_NAME'], pool_pre_ping=True)
 app.config['DB_CONN'] = engine.connect()
@@ -22,7 +22,7 @@ def home():
 def signup():
     if request.method == "GET":
         return render_template("signup.html")
-    elif request.method == "POST":
+    if request.method == "POST":
         username = request.form.get("username", None)
         password = request.form.get("password", None)
         email = request.form.get("email", None)
@@ -32,10 +32,27 @@ def signup():
             return "Failed Request", 404
 
         #send to database
-        sql = "INSERT INTO accounts (username, password, email) VALUES ('" + username + "','" + password + "','" + email + "')";
+        sql = 'INSERT INTO accounts (username, password, email) VALUES (' + username + ',' + password + ',' + email + ');'
         num = app.config['DB_CONN'].execute(sql)
 
-        return "Username already exists", 400
+        return "Success!", 200
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return 404
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        #check whether all the data was passed in properly
+        if username == None or password == None:
+            return "Failed Request", 404
+        
+        sql = 'SELECT * FROM accounts WHERE username=' + username + ' AND password=' + password
+        test = app.config['DB_CONN'].execute(sql)
+
+        return 200
 
 @app.route('/welcome')
 def welcome():
