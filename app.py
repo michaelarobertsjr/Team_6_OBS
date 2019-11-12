@@ -6,10 +6,10 @@ import pymysql
 app = Flask(__name__)
 
 app.config['SECRET'] = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ=="
-app.config['DB_HOST'] = "35.202.171.233"
-app.config['DB_USER'] = "admin"
-app.config['DB_PASS'] = "team6adminpass"
-app.config['DB_NAME'] = "users"
+app.config['DB_HOST'] = ""
+app.config['DB_USER'] = ""
+app.config['DB_PASS'] = ""
+app.config['DB_NAME'] = ""
 
 engine = db.create_engine('mysql+pymysql://' + app.config['DB_USER'] + ':' + app.config['DB_PASS'] + '@' + app.config['DB_HOST'] + '/' + app.config['DB_NAME'], pool_pre_ping=True)
 app.config['DB_CONN'] = engine.connect()
