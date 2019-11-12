@@ -49,7 +49,7 @@ export class UserControl extends React.Component {
           //this.props.getUser();
         },
         error => {
-          window.alert("Invalid Username/Password combination.");
+          window.alert("Invalid Username/Password Combo");
         }
       )
     }

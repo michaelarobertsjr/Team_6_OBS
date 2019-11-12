@@ -49,18 +49,18 @@ export class SignupForm extends React.Component {
   handlePost(e) {
     //verify that the account information is legal
     if(this.state.password.length < 8){
-      window.alert("Password must be 8 characters");
+      window.alert("Password must be 8 characters minimum.");
     }
     else if(this.state.username.length < 8){
-      window.alert("Password must be 8 characters");
+      window.alert("Username must be 8 characters minimum.");
     }
     else if(this.state.email.length < 6){
-      window.alert("Email muest exceed 6 characters");
+      window.alert("Email must exceed 6 characters.");
     }
     else if(this.state.password !== this.state.passwordC){
       window.alert("Passwords must match.");
     }
-    else if(this.state.email.includes("@") === false){
+    else if(this.state.email.includes("@") === false || this.state.email.includes(".") === false){
       window.alert("Must be a valid email.");
     }
     else{
@@ -79,10 +79,10 @@ export class SignupForm extends React.Component {
       axios.post('/signup', form, config)
       .then(
         response => {
-          window.alert("Should have worked.");
+          window.alert("Account Created!");
         },
         error => {
-          window.alert("An error occured. Please try again later.");
+          window.alert("Either the Email or Username are already in use. Please choose another.");
         }
       );
     }
@@ -93,10 +93,38 @@ export class SignupForm extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col">
+            <h3>Email: </h3>
+          </div>
+          <div className="col">
             <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.onChange.bind(this)}></input>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3>Username: </h3>
+          </div>
+          <div className="col">
             <input type="text" name="user" placeholder="Username" value={this.state.username} onChange={this.onChange.bind(this)}></input>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3>Password: </h3>
+          </div>
+          <div className="col">
             <input type="password" name="pass" placeholder="Password" value={this.state.password} onChange={this.onChange.bind(this)}></input>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <h3>Confirm Password: </h3>
+          </div>
+          <div className="col">
             <input type="password" name="passC" placeholder="Confirm Password" value={this.state.passwordC} onChange={this.onChange.bind(this)}></input>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
             <button onClick={this.handlePost.bind(this)}>Create Account</button>
           </div>
         </div>
@@ -105,4 +133,5 @@ export class SignupForm extends React.Component {
   }
 }
 
-ReactDOM.render(<SignupForm/>, window.document.getElementById("signup"));
+if(window.document.getElementById("signup"))
+  ReactDOM.render(<SignupForm/>, window.document.getElementById("signup"));

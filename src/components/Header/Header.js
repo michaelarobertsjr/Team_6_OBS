@@ -15,7 +15,7 @@ export class Header extends React.Component {
   getUser(){
     axios.get("/login").then(
       response => {
-        //save cube card information
+        //save user information
         this.setState({
           username: response.data
         });
@@ -83,4 +83,5 @@ export class Header extends React.Component {
   }
 }
 
-ReactDOM.render(<Header/>, window.document.getElementById("header"));
+if(window.document.getElementById("header"))
+  ReactDOM.render(<Header/>, window.document.getElementById("header"));

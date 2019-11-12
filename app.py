@@ -2,6 +2,7 @@ from flask import Flask, render_template, Blueprint, request
 import jwt
 import sqlalchemy as db
 import pymysql
+import time
 
 app = Flask(__name__)
 
@@ -62,13 +63,14 @@ def login():
         #check whether all the data was passed in properly
         if username == None or password == None:
             return "Failed Request", 404
-        
+
         sql = 'SELECT * FROM accounts WHERE username=\'' + username + '\' AND password=\'' + password + '\''
         test = app.config['DB_CONN'].execute(sql).fetchall()
         #Add form input cases
 
         if len(test) != 0:
-            payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][3]}
+            epoch_time = int(time.time()) + 3600   #gets the epoch time in UTC this is used as an expiration for JWT and add an hour
+            payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][3], 'exp': epoch_time}
             token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
             return token, 200
         else:

@@ -4,7 +4,8 @@
   "description": "Semester Project",
   "main": "app.py",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
+    "build:production": "webpack --mode production",
     "start": "flask run",
     "test": "pytest"
   },
