@@ -31,16 +31,30 @@ def signup():
         if username == None or password == None or email == None:
             return "Failed Request", 404
 
-        #send to database
-        sql = 'INSERT INTO accounts (username, password, email) VALUES (' + username + ',' + password + ',' + email + ');'
-        num = app.config['DB_CONN'].execute(sql)
+        #check database for existing user
+        sql = 'SELECT uid, username, email FROM accounts WHERE email=\'' + email + '\''
+        existing = app.config['DB_CONN'].execute(sql).fetchall()
+        if len(existing) == 0:
+            #send to database
+            sql = 'INSERT INTO accounts (username, password, email) VALUES (\'' + username + '\',\'' + password + '\',\'' + email + '\');'
+            num = app.config['DB_CONN'].execute(sql)
+
+            #query for additional auto-generated user info
+            sql = 'SELECT uid, username, email FROM accounts WHERE email=\'' + email + '\''
+            test = app.config['DB_CONN'].execute(sql).fetchall()
+
+            payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][2]}
+            token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
+            return token, 200
+        else:
+            return "Email address already in use", 400
 
         return "Success!", 200
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return 404
+        return "Success", 404
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -49,10 +63,16 @@ def login():
         if username == None or password == None:
             return "Failed Request", 404
         
-        sql = 'SELECT * FROM accounts WHERE username=' + username + ' AND password=' + password
-        test = app.config['DB_CONN'].execute(sql)
+        sql = 'SELECT * FROM accounts WHERE username=\'' + username + '\' AND password=\'' + password + '\''
+        test = app.config['DB_CONN'].execute(sql).fetchall()
+        #Add form input cases
 
-        return 200
+        if len(test) != 0:
+            payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][3]}
+            token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
+            return token, 200
+        else:
+            return "Invalid User Credentials", 400
 
 @app.route('/welcome')
 def welcome():
