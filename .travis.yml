@@ -6,7 +6,7 @@ script:
 
 before_install:
   - nvm install node
-  - pyenv install 3.7.4
+  - pyenv install
 
 install:
   - npm install
