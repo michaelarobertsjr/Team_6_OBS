@@ -68,7 +68,7 @@ def login():
         if username is None or password is None:
             return "Failed Request", 404
 
-        sql = 'SELECT * FROM accounts WHERE username=\'' + username + '\'
+        sql = 'SELECT * FROM accounts WHERE username=\'' + username + '\''
         sql += ' AND password=\'' + password + '\''
         test = app.config['DB_CONN'].execute(sql).fetchall()
         #Add form input cases
