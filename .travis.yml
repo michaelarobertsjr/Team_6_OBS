@@ -1,16 +1,20 @@
-language: csharp
-mono: none
-dotnet: 3.0.100
-script:
-  - cd NTDOY/NTDOY_Microservice && dotnet publish && dotnet test && cd ../..
+#language: csharp
+#mono: none
+#dotnet: 3.0.100
+#script:
+#  - cd NTDOY/NTDOY_Microservice && dotnet publish && dotnet test && cd ../..
+
+language: python
+python:
+  - "3.7"
 
 before_install:
   - nvm install node
-  - pyenv install 3.7.0a1
+#  - pyenv install 3.7.0a1
 
 install:
   - npm install
-  - sudo pip install -r requirements.txt
+  - pip install -r requirements.txt
 
 jobs:
   include:
