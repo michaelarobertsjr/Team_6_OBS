@@ -1,17 +1,5 @@
 matrix:
   include:
-    - language: csharp
-      mono: none
-      dotnet: 2.1.300
-      before_script:
-        - cd NTDOY/NTDOY_Microservice
-      script:
-        - dotnet publish
-        - cd ../NTDOY.Test
-        - dotnet test
-      after_script:
-        - cd ../..
-
     - language: python
       python: 3.7
       script:
