@@ -38,6 +38,6 @@ TODO Test (lul)
 
 REMOVE LATER:
 env variables:
-dbconnection: "server=35.224.129.168;uid=root;pwd=ntdoypassword;database=NTDOY_Logs"
+dbconnection: "server=35.224.129.168;uid=root;pwd=password;database=NTDOY_Logs"
 secret: "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ=="
 tradier: "IymVCsUIpSobaA3RGFqGtWGWzMUQ"
