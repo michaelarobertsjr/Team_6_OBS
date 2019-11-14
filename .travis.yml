@@ -13,6 +13,8 @@ matrix:
     - language: python
       python:
         - 3.7
+      script:
+        - pip install -r requirements.txt
 
     - language: node_js
       node_js: node
@@ -23,7 +25,7 @@ matrix:
 
 install:
   - npm install
-  - pip install -r requirements.txt
+#  - pip install -r requirements.txt
 
 jobs:
   include:
