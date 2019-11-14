@@ -2,7 +2,7 @@ language: csharp
 mono: none
 dotnet: 3.0.100
 script:
-  - cd NTDOY_Microservice && dotnet restore && cd ..
+  - cd NTDOY/NTDOY_Microservice && dotnet publish && dotnet test && cd ../..
 
 before_install:
   - nvm install node
@@ -10,7 +10,7 @@ before_install:
 
 install:
   - npm install
-  - pip install -r requirements.txt
+  - pip3 install -r requirements.txt
 
 jobs:
   include:
