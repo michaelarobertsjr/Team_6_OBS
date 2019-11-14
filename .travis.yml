@@ -2,11 +2,11 @@ matrix:
   include:
     - language: csharp
       mono: none
-      dotnet: 3.0.100
+      dotnet: 2.1.0
       before_script:
         - cd NTDOY/NTDOY_Microservice
       script:
-        - dotnet publish && dotnet test
+        - dotnet restore && dotnet test
       after_script:
         - cd ../..
 
