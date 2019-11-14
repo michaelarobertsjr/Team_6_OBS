@@ -18,13 +18,15 @@ matrix:
 
     - language: node_js
       node_js: node
+      script:
+        - npm install
 
 #before_install:
 #  - nvm install node
 #  - pyenv install 3.7.0a1
 
-install:
-  - npm install
+#install:
+#  - npm install
 #  - pip install -r requirements.txt
 
 jobs:
