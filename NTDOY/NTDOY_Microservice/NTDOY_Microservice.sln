@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTDOY_Microservice", "NTDOY_Microservice.csproj", "{23CA9686-79FF-41EE-BF79-1ED40B8115E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTDOY.Test", "..\NTDOY.Test\NTDOY.Test.csproj", "{3BBF8BB5-F3E7-4A97-AAB1-671961CCD6F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTDOY.Test", "..\NTDOY.Test\NTDOY.Test.csproj", "{3BBF8BB5-F3E7-4A97-AAB1-671961CCD6F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
