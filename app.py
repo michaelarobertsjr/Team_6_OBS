@@ -44,7 +44,7 @@ def signup():
             sql = 'SELECT uid, username, email FROM accounts WHERE email=\'' + email + '\''
             test = app.config['DB_CONN'].execute(sql).fetchall()
 
-            payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][2]}
+            payload = {'username' : test[0][1], 'email' : test[0][2]}
             token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
             return token, 200
         else:
@@ -72,6 +72,7 @@ def login():
             epoch_time = int(time.time()) + 3600   #gets the epoch time in UTC this is used as an expiration for JWT and add an hour
             payload = {'uid' : test[0][0], 'username' : test[0][1], 'email' : test[0][3], 'exp': epoch_time}
             token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
+            print(token)
             return token, 200
         else:
             return "Invalid User Credentials", 400
