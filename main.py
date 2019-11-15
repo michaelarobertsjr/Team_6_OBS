@@ -1,4 +1,5 @@
 import time
+import os
 from flask import Flask, render_template, request
 import jwt
 import sqlalchemy as db
@@ -6,16 +7,17 @@ import pymysql
 
 app = Flask(__name__)
 
-app.config['SECRET'] = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ=="
-app.config['DB_HOST'] = ""
-app.config['DB_USER'] = ""
-app.config['DB_PASS'] = ""
-app.config['DB_NAME'] = ""
+app.config['SECRET'] = os.environ['JWT_SECRET']
+engine = db.create_engine(os.environ['DB_CONN_STRING'], pool_pre_ping=True)
 
-sql_conn = 'mysql + pymysql://' + app.config['DB_USER'] + ':' + app.config['DB_PASS']
-sql_conn += '@' + app.config['DB_HOST'] + '/' + app.config['DB_NAME']
-engine = db.create_engine(sql_conn, pool_pre_ping=True)
-app.config['DB_CONN'] = engine.connect()
+#use this route to establish the db connection when its ready
+@app.route('/connect')
+def connect():
+    try:
+        app.config['DB_CONN'] = engine.connect()
+        return 'Connection Successful', 200
+    except:
+        return 'Connection Failed', 500
 
 @app.route('/')
 def home():
@@ -76,7 +78,7 @@ def login():
         if len(test) != 0:
             epoch_time = int(time.time()) + 3600
             payload = {'uid' : test[0][0], 'username' : test[0][1]}
-            payload['email'] = test[0][3]
+            payload['email'] = test[0][2]
             payload['exp'] = epoch_time
             token = jwt.encode(payload, app.config['SECRET'], algorithm='HS256')
             return token, 200

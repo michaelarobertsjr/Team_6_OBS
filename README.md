@@ -14,4 +14,8 @@ npm install
 
 3. Finally, input the following command to run the app locally...
 
-npm start
+python main.py
+
+
+Google Cloud Links:
+https://obsmainservice.appspot.com   -Signup and Login
